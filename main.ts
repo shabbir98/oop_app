@@ -17,10 +17,9 @@ class Person {
 
 const people = new Person();
 
-async function start(people: Person) {
+async function talkWith(people: Person) {
+  console.log('Welcome');
   do {
-    console.log('Welcome');
-
     const { select } = await inquirer.prompt({
       type: 'list',
       message: 'With whom you do wanna talk with?',
@@ -42,17 +41,15 @@ async function start(people: Person) {
 
         const student = people.students.find((value) => value.name === ans);
 
-        if (!student) {
+        if (student)
+          console.log(
+            `Student already exists in the list\nHello i am ${student.name}`
+          );
+        else {
           const name = new Student(ans);
           people.addStudent(name);
 
           console.log(`New student added in the list\nHello i am ${name.name}`);
-          console.log(people.students);
-        }
-        if (student) {
-          console.log(
-            `Student already exists in the list\nHello i am ${student.name}`
-          );
           console.log(people.students);
         }
         break;
@@ -60,4 +57,4 @@ async function start(people: Person) {
   } while (true);
 }
 
-start(people);
+talkWith(people);
